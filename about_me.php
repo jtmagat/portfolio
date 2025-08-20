@@ -11,6 +11,7 @@
   --avatar-size: 160px; /* small size after scroll */
 }
 
+/* ========== BASE ==========\ */
 body {
   margin: 0;
   padding: 0;
@@ -131,24 +132,64 @@ nav a:hover::after { transform: scaleX(1); transform-origin: left; }
   line-height: 1.6;
 }
 
-/* MUSIC PLAYLIST STYLE */
+/* Back Button */
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.25s ease;  /* mas mabilis */
+  z-index: 1000;
+  pointer-events: none; /* para di clickable pag hidden */
+}
+
+.back-btn.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-btn a {
+  text-decoration: none;  /* walang underline */
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  transition: color 0.2s ease;
+}
+
+.back-btn a:hover {
+  color: #555;
+}
+
+
+/* ========== MUSIC ==========\ */
 #music h2 {
   font-size: 2rem;
   margin-bottom: 10px;
 }
-
 #music .desc {
   font-size: 1rem;
   margin-bottom: 25px;
   color: #444;
 }
 
+/* dynamic playlist container */
+#playlist-container {}
+
+/* list */
 .playlist {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  opacity: 0;
 }
+.playlist.slide-in-right { animation: slideInRight .45s ease forwards; }
+.playlist.slide-in-left  { animation: slideInLeft .45s ease forwards; }
+@keyframes slideInRight { from{opacity:0; transform: translateX(30px)} to{opacity:1; transform: translateX(0)} }
+@keyframes slideInLeft  { from{opacity:0; transform: translateX(-30px)} to{opacity:1; transform: translateX(0)} }
 
+/* card */
 .track {
   display: flex;
   align-items: center;
@@ -157,16 +198,16 @@ nav a:hover::after { transform: scaleX(1); transform-origin: left; }
   padding: 12px 18px;
   border-radius: 12px;
   background: #fff;
-  text-decoration: none; /* remove underline */
-  color: inherit;        /* keep text black */
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, opacity .4s ease;
 }
-
 .track:hover {
   transform: scale(1.02);
   box-shadow: 2px 4px 12px rgba(0,0,0,0.15);
 }
 
+/* album */
 .track img {
   width: 60px;
   height: 60px;
@@ -175,21 +216,12 @@ nav a:hover::after { transform: scaleX(1); transform-origin: left; }
   margin-right: 15px;
 }
 
-.track-info {
-  flex: 1;
-}
+/* info */
+.track-info { flex: 1; }
+.track-info h3 { font-size: 1.2rem; margin: 0; }
+.track-info p  { font-size: 0.9rem; margin: 2px 0 0; color: #555; }
 
-.track-info h3 {
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-.track-info p {
-  font-size: 0.9rem;
-  margin: 2px 0 0;
-  color: #555;
-}
-
+/* play btn */
 .play-btn {
   background: #000;
   color: #fff;
@@ -200,165 +232,230 @@ nav a:hover::after { transform: scaleX(1); transform-origin: left; }
   cursor: pointer;
   transition: transform 0.2s ease, background 0.3s ease;
 }
+.play-btn:hover { background: #333; transform: scale(1.2); }
 
-.play-btn:hover {
-  background: #333;
-  transform: scale(1.2);
+/* TRACK ANIMATIONS */
+.animated-track { position: relative; overflow: hidden; background: linear-gradient(135deg, #fff, #f7f7f7); }
+.animated-track:hover {
+  background: linear-gradient(135deg, #323131ff, #848181ff, #cdc9c9ff, #ffffffff);
+  animation: gradientShift 6s ease infinite;
+}
+@keyframes gradientShift {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+.album-wrap { position: relative; }
+.album-wrap img { border-radius: 50%; animation: spin 12s linear infinite; }
+.animated-track:hover .album-wrap img { animation-duration: 3s; }
+@keyframes spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+
+/* Equalizer bars */
+.equalizer {
+  position: absolute;
+  bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 3px;
+}
+.equalizer span {
+  display: block;
+  width: 4px; height: 8px;
+  background: #000;
+  animation: bounce 1s infinite ease-in-out;
+}
+.equalizer span:nth-child(1){ animation-delay: 0s;}
+.equalizer span:nth-child(2){ animation-delay: .2s;}
+.equalizer span:nth-child(3){ animation-delay: .4s;}
+.equalizer span:nth-child(4){ animation-delay: .6s;}
+@keyframes bounce { 0%,100%{height:6px} 50%{height:18px} }
+
+/* Controls / Pagination */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+.controls button {
+  background: #1db954;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s, transform .15s;
+}
+.controls button:hover { background: #1ed760; transform: translateY(-1px); }
+.controls button:disabled { background: #c9eecf; cursor: not-allowed; transform:none; }
+
+#pagination { display: flex; gap: 8px; }
+.page-btn {
+  background: #1db954;
+  color: #000;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s, transform .15s;
+}
+.page-btn:hover { background: #1ed760; transform: translateY(-1px); }
+.page-btn.active { background: #fff; border: 2px solid #000; }
+
+/* ========== HOBBIES ==========\ */
+#hobbies {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #fff, #f9f9f9);
 }
 
->
-/* HOBBIES SECTION */
-.section#hobbies {
-  perspective: 1200px; /* for 3D effect */
+#hobbies h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
   position: relative;
-  overflow: hidden;
-  padding-bottom: 150px;
-  background: linear-gradient(135deg, #1a1a1a, #111);
-  color: #fff;
 }
-
-/* Floating sparkle background */
-.section#hobbies::before {
-  content:"";
-  position:absolute;
-  width:200%; height:200%;
-  top:-50%; left:-50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 80%);
-  animation: rotateBG 20s linear infinite;
-  z-index:0;
+#hobbies h2::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background: #000;
+  display: block;
+  margin: 10px auto 0;
+  border-radius: 2px;
 }
-@keyframes rotateBG { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
 
 .hobby-container {
   display: flex;
-  justify-content: center;
+  gap: 25px;
   flex-wrap: wrap;
-  gap: 40px;
-  margin-top: 40px;
-  position: relative;
-  z-index: 1;
+  justify-content: center;
 }
 
-/* 3D Hobby Cards */
 .hobby-card {
-  width: 260px;
-  height: 320px;
-  border-radius: 25px;
-  background: linear-gradient(145deg, #222, #111);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex: 1 1 280px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 18px;
   padding: 25px;
-  transition: transform 0.6s ease, box-shadow 0.6s ease;
-  transform-style: preserve-3d;
-  cursor: pointer;
+  box-shadow: 4px 6px 0px #000;
+  text-align: center;
+  position: relative;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .hobby-card:hover {
-  transform: rotateY(15deg) rotateX(10deg) translateY(-20px) scale(1.08);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+  transform: translateY(-12px) rotate(-1deg);
+  box-shadow: 8px 12px 0px #000;
 }
 
-/* 3D floating icon */
-.icon {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 20px;
-  border-radius: 50%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  transform-style: preserve-3d;
-  animation: float 3s ease-in-out infinite alternate;
-}
-
-.basketball { background-image: url('assets/basketball.png'); }
-.gaming     { background-image: url('assets/gaming.png'); }
-.coding     { background-image: url('assets/coding.png'); }
-
-@keyframes float {
-  0% { transform: translateY(0px) rotateY(0deg); }
-  50% { transform: translateY(-20px) rotateY(15deg); }
-  100% { transform: translateY(0px) rotateY(0deg); }
-}
-
-/* Card text */
 .hobby-card h3 {
-  margin: 0;
-  font-size: 1.5rem;
-  text-align: center;
-  letter-spacing: 1px;
+  font-size: 1.4rem;
+  margin: 15px 0 8px;
 }
+
 .hobby-card p {
   font-size: 0.95rem;
-  text-align: center;
-  margin-top: 10px;
-  line-height: 1.4;
-  color: #ccc;
+  color: #444;
 }
 
-/* Basketball shadow bouncing */
-.basketball-card .ball-shadow {
+/* --- Basketball --- */
+.basketball-card .icon.basketball {
   width: 80px;
-  height: 15px;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.5), transparent);
+  height: 80px;
+  margin: 0 auto;
+  background: radial-gradient(circle at 30% 30%, #ff6b00, #d35400);
   border-radius: 50%;
-  margin-top: 20px;
-  animation: shadowBounce 1s infinite alternate;
+  position: relative;
+  animation: bounce 1.8s infinite ease-in-out;
 }
-@keyframes shadowBounce {
-  0% { transform: scaleX(1) translateY(0); opacity:0.5; }
-  50% { transform: scaleX(1.2) translateY(10px); opacity:0.7; }
-  100% { transform: scaleX(1) translateY(0); opacity:0.5; }
-}
-
-/* Gaming glitch overlay */
-.gaming-card .glitch-overlay {
+.basketball-card .icon.basketball::after {
+  content: "";
   position: absolute;
-  top:0; left:0; width:100%; height:100%;
-  background: repeating-linear-gradient(
-    0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 2px,
-    transparent 2px, transparent 4px
-  );
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  animation: glitch 0.3s infinite;
-}
-@keyframes glitch {
-  0%{transform:translate(0,0);}
-  25%{transform:translate(-5px,2px);}
-  50%{transform:translate(3px,-3px);}
-  75%{transform:translate(-2px,1px);}
-  100%{transform:translate(0,0);}
+  width: 100%;
+  height: 6px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 50%;
+  bottom: -12px;
+  left: 0;
+  filter: blur(2px);
 }
 
-/* Coding terminal effect */
+/* bounce ball */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* --- Gaming --- */
+.gaming-card .icon.gaming {
+  width: 80px;
+  height: 50px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 0 12px #1db954;
+  animation: glow 2s infinite alternate;
+}
+.gaming-card .icon.gaming::before,
+.gaming-card .icon.gaming::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #1db954;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.gaming-card .icon.gaming::before { left: -18px; }
+.gaming-card .icon.gaming::after { right: -18px; }
+
+/* glowing controller */
+@keyframes glow {
+  from { box-shadow: 0 0 5px #1db954; }
+  to { box-shadow: 0 0 20px #1db954; }
+}
+
+/* --- Coding --- */
+.coding-card .icon.coding {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  background: #222;
+  color: lime;
+  font-family: monospace;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.coding-card .icon.coding::before {
+  content: "</>";
+  font-size: 24px;
+  color: lime;
+}
 .coding-card .code-lines {
   margin-top: 15px;
-  width: 100%;
-  font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
-  color: #0f0;
-  background: rgba(0,0,0,0.3);
-  padding: 10px;
-  border-radius: 10px;
+  font-family: monospace;
+  text-align: left;
+  font-size: 0.8rem;
   animation: typing 5s steps(40) infinite;
-  overflow: hidden;
   white-space: nowrap;
-}
-@keyframes typing {
-  0% { width: 0; }
-  50% { width: 100%; }
-  100% { width: 0; }
+  overflow: hidden;
+  border-right: 2px solid lime;
 }
 
-/* Responsive tweaks */
-@media (max-width: 600px){
-  .hobby-container { flex-direction: column; align-items: center; gap: 30px; }
-  .hobby-card { width: 90%; height: auto; padding: 20px; }
-  .icon { width: 80px; height: 80px; }
+/* typing effect */
+@keyframes typing {
+  0% { width: 0 }
+  50% { width: 100% }
+  100% { width: 0 }
 }
 
 /* FOOTER */
@@ -374,10 +471,17 @@ footer .name { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; font-f
 footer p { font-size: 0.9rem; margin: 5px 0; }
 
 /* small screens tweak */
+@media (max-width: 600px){
+  .hobby-container { flex-direction: column; align-items: center; gap: 30px; }
+  .hobby-card { width: 90%; height: auto; padding: 20px; }
+  .icon { width: 80px; height: 80px; }
+}
 @media (max-width: 480px){
   :root{ --avatar-size: 120px; }
   #heroImg{ width: 220px; height: 220px; }
-}
+} 
+
+
 </style>
 </head>
 <body>
@@ -392,51 +496,36 @@ footer p { font-size: 0.9rem; margin: 5px 0; }
 <div class="hero">
   <h1 class="hero-title">ABOUT ME</h1>
   <img src="assets/me.jpg" alt="Jamel Magat" id="heroImg"/>
-  <p class="hero-sub">Get to know my vibe</p>
+  <p class="hero-sub">y'all stalker</p>
 </div>
+
+<!-- BACK BUTTON -->
+<div class="back-btn" id="backBtn">
+  <a href="portfolio.php">⟵</a>
+</div> 
+
 
 <!-- MUSIC -->
-<div class="section" id="music">
-  <h2>🎶 My Top 10 Tracks</h2>
-  <p class="desc">My current rotation, pure vibe & influence.</p>
+<section class="section" id="music">
+  <h2>My Top 10 Tracks</h2>
+  <p class="desc">My current rotation, is on fire innit.</p>
 
-  <div class="playlist">
-    <!-- Track 1 -->
-    <a href="https://open.spotify.com/track/1" target="_blank" class="track">
-      <img src="assets/notutoo.jpg" alt="Album Art">
-      <div class="track-info">
-        <h3>Not You Too</h3>
-        <p>Drake ft. Chris Brown</p>
-      </div>
-      <button class="play-btn">▶</button>
-    </a>
+  <!-- dynamic render target -->
+  <div id="playlist-container"></div>
 
-    <!-- Track 2 -->
-    <a href="https://open.spotify.com/track/2" target="_blank" class="track">
-      <img src="assets/notutoo.jpg" alt="Album Art">
-      <div class="track-info">
-        <h3>Chicago Freestyle</h3>
-        <p>Drake ft. Giveon</p>
-      </div>
-      <button class="play-btn">▶</button>
-    </a>
-
-    <!-- Track 3 -->
-    <a href="https://open.spotify.com/track/3" target="_blank" class="track">
-      <img src="assets/20deep.jpg" alt="Album Art">
-      <div class="track-info">
-        <h3>20 Deep</h3>
-        <p>O Side Mafia</p>
-      </div>
-      <button class="play-btn">▶</button>
-    </a>
+  <!-- controls + pagination -->
+  <div class="controls">
+    <button id="prevBtn">⏮ Prev</button>
+    <div id="pagination"></div>
+    <button id="nextBtn">Next ⏭</button>
   </div>
-</div>
+</section>
 
 <!-- HOBBIES -->
 <div class="section" id="hobbies">
   <h2>Hobbies</h2>
   <div class="hobby-container">
+    
     <!-- Basketball -->
     <div class="hobby-card basketball-card">
       <div class="icon basketball"></div>
@@ -464,8 +553,10 @@ footer p { font-size: 0.9rem; margin: 5px 0; }
         <span>let energy = '100%';</span>
       </div>
     </div>
+
   </div>
 </div>
+
 
 <!-- CERTIFICATES -->
 <div class="section" id="certs">
@@ -480,27 +571,157 @@ footer p { font-size: 0.9rem; margin: 5px 0; }
 </footer>
 
 <script>
+/* hero shrink + section reveal */
 const heroImg = document.getElementById('heroImg');
 const sections = document.querySelectorAll('.section');
 
 function handleScroll(){
-  const threshold = window.innerHeight * 0.45; 
+  const threshold = window.innerHeight * 0.45;
   if (window.scrollY > threshold) {
-    heroImg.classList.add('small');   // shrink w/ pop effect
+    heroImg.classList.add('small');
   } else {
-    heroImg.classList.remove('small'); // back to big
+    heroImg.classList.remove('small');
   }
-
-  // reveal sections
   const triggerBottom = window.innerHeight * 0.85;
   sections.forEach(sec => {
     const top = sec.getBoundingClientRect().top;
     if (top < triggerBottom) sec.classList.add('visible');
   });
 }
-
 window.addEventListener('scroll', handleScroll, { passive: true });
 handleScroll();
+
+/* ===== MUSIC DATA ===== */
+const tracksData = [
+  { title: "Not You Too", artist: "Drake ft. Chris Brown", img: "assets/notutoo.jpg", link: "https://open.spotify.com/track/1" },
+  { title: "Chicago Freestyle", artist: "Drake ft. Giveon", img: "assets/notutoo.jpg", link: "https://open.spotify.com/track/2" },
+  { title: "20 Deep", artist: "O Side Mafia", img: "assets/20deep.jpg", link: "https://open.spotify.com/track/3" },
+  { title: "UK Rap", artist: "Dave, Central Cee", img: "assets/ukrap.jpeg", link: "https://open.spotify.com/track/3Ofmpyhv5UAQ70mENzB277" },
+  { title: "What Did I Miss?", artist: "Drake", img: "assets/whatdidimiss.jpg", link: "https://open.spotify.com/track/1IeAHTFukgidXjoMi95uf2?si=bc05ad7bfc954096" },
+  { title: "Took Her To The O", artist: "King Von", img: "assets/tookhero.jpg", link: "https://open.spotify.com/track/0TK2YIli7K1leLovkQiNik" },
+  { title: "If I Could Teach The World", artist: "Bone Thugs-N-Harmony", img: "assets/ificouldteachtheworld.jpg", link: "https://open.spotify.com/track/4XxP44Qk6cGcpBHNZ0Yp7A" },
+  { title: "No Role Modelz", artist: "J. Cole", img: "assets/norolemodelz.jpg", link: "https://open.spotify.com/track/6ZNjE67N0Ftb3pC6iX4lnR" },
+  { title: "Talkshit", artist: "Costa Cashman", img: "assets/talkshit.jpg", link: "https://open.spotify.com/track/6wWxz6Qg8OUnuntgSkeP4N?si=8f52529afde34513" },
+  { title: "9", artist: "Drake", img: "assets/9.jpg", link: "https://open.spotify.com/track/1C7KSXR2GVxknex6I4ANco?si=8587a60ee11946ef" },
+];
+
+const itemsPerPage = 5;
+let currentPage = 1;
+let lastPage = 1;
+
+const playlistContainer = document.getElementById('playlist-container');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const paginationDiv = document.getElementById('pagination');
+
+function renderTracks(page){
+  // direction animation
+  const slideClass = page > lastPage ? 'slide-in-right' : 'slide-in-left';
+  lastPage = page;
+
+  // compute slice
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const pageTracks = tracksData.slice(start, end);
+
+  // build list
+  const list = document.createElement('div');
+  list.className = `playlist ${slideClass}`;
+
+  pageTracks.forEach(track => {
+    list.innerHTML += `
+      <a href="${track.link}" target="_blank" class="track animated-track">
+        <div class="album-wrap">
+          <img src="${track.img}" alt="${track.title}">
+          <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="track-info">
+          <h3>${track.title}</h3>
+          <p>${track.artist}</p>
+        </div>
+        <button class="play-btn" aria-label="Play ${track.title}">▶</button>
+      </a>
+    `;
+  });
+
+  // swap DOM
+  playlistContainer.innerHTML = '';
+  playlistContainer.appendChild(list);
+
+  renderPagination();
+  updatePrevNext();
+}
+
+function renderPagination(){
+  const totalPages = Math.ceil(tracksData.length / itemsPerPage);
+  paginationDiv.innerHTML = '';
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.textContent = i;
+    btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+    btn.addEventListener('click', () => {
+      currentPage = i;
+      renderTracks(currentPage);
+    });
+    paginationDiv.appendChild(btn);
+  }
+}
+
+function updatePrevNext(){
+  const totalPages = Math.ceil(tracksData.length / itemsPerPage);
+  prevBtn.disabled = currentPage === 1;
+  nextBtn.disabled = currentPage === totalPages;
+}
+
+prevBtn.addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderTracks(currentPage);
+  }
+});
+nextBtn.addEventListener('click', () => {
+  const totalPages = Math.ceil(tracksData.length / itemsPerPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderTracks(currentPage);
+  }
+});
+
+// init
+renderTracks(currentPage);
+
+const tracks = document.querySelectorAll('.track');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.2 });
+
+tracks.forEach(track => observer.observe(track));
+
+let lastScroll = 0;
+window.addEventListener("scroll", () => {
+  const backBtn = document.getElementById("backBtn");
+  let currentScroll = window.scrollY;
+
+  if (currentScroll > lastScroll) {
+    // scrolling down → hide agad
+    backBtn.classList.remove("show");
+  } else {
+    // scrolling up → show agad
+    if (currentScroll > 20) {
+      backBtn.classList.add("show");
+    } else {
+      backBtn.classList.remove("show");
+    }
+  }
+
+  lastScroll = currentScroll;
+});
+
 </script>
 </body>
 </html>
