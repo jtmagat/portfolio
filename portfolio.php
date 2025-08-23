@@ -6,147 +6,147 @@
   <title>Jamel Magat – Portfolio</title>
   <!-- Catchy Font -->
   <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #fff;
-      color: #111;
-      font-family: 'Anton', sans-serif;
-      overflow-x: hidden;
-    }
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            color: #111;
+            font-family: 'Anton', sans-serif;
+            overflow-x: hidden;
+          }
 
-    /* NAVBAR */
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #fff;
-  border-bottom: 1px solid #111;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  padding: 15px 0;
-  z-index: 1000;
-  transition: transform 0.3s ease; /* smooth slide */
-}
+          /* NAVBAR */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        border-bottom: 1px solid #111;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        padding: 15px 0;
+        z-index: 1000;
+        transition: transform 0.3s ease; /* smooth slide */
+      }
 
-nav.hide {
-  transform: translateY(-100%); /* itago */
-}
+      nav.hide {
+        transform: translateY(-100%); /* itago */
+      }
 
 
-nav a {
-  text-decoration: none;
-  color: #111;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
-  position: relative;
-  transition: color 0.3s ease;
-  padding: 10px; /* 🔑 para same spacing lahat ng links */
-  display: inline-block;
-}
+      nav a {
+        text-decoration: none;
+        color: #111;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        position: relative;
+        transition: color 0.3s ease;
+        padding: 10px; /* 🔑 para same spacing lahat ng links */
+        display: inline-block;
+      }
 
-nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -4px;
-  width: 100%;
-  height: 2px;
-  background: #111;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-  transform-origin: right;
-}
+      nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 100%;
+        height: 2px;
+        background: #111;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+        transform-origin: right;
+      }
 
-nav a:hover {
-  color: #555;
-}
+      nav a:hover {
+        color: #555;
+      }
 
-nav a:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
+      nav a:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
 
-/* DROPDOWN */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
+      /* DROPDOWN */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background: white;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-  z-index: 1;
-  top: 100%;   /* 🔑 lumabas sa ilalim ng CV link */
-  left: 0;
-}
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+        z-index: 1;
+        top: 100%;   /* 🔑 lumabas sa ilalim ng CV link */
+        left: 0;
+      }
 
-.dropdown-content a {
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-  color: black;
-}
+      .dropdown-content a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: black;
+      }
 
-.dropdown-content a:hover {
-  background: #f0f0f0;
-}
+      .dropdown-content a:hover {
+        background: #f0f0f0;
+      }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
+      /* Show dropdown on hover */
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
 
-/* Dark mode styles */
-@media (prefers-color-scheme: dark) {
-  .infinite-scroll-card {
-    background: linear-gradient(135deg, #8a3eff, #3a7bd5);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-}
+      /* Dark mode styles */
+      @media (prefers-color-scheme: dark) {
+        .infinite-scroll-card {
+          background: linear-gradient(135deg, #8a3eff, #3a7bd5);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+      }
 
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .infinite-scroll-container {
-    max-width: 100%;
-    padding: 15px 0;
-  }
-  
-  .infinite-scroll-card {
-    flex: 0 0 200px;
-    height: 160px;
-  }
-  
-  .card-content i {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .card-content h3 {
-    font-size: 16px;
-    margin-bottom: 8px;
-  }
-  
-  .card-content p {
-    font-size: 12px;
-  }
-  
-  @keyframes scroll-cards {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(calc(-200px * 3 - 60px));
-    }
-  }
-}
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .infinite-scroll-container {
+          max-width: 100%;
+          padding: 15px 0;
+        }
+        
+        .infinite-scroll-card {
+          flex: 0 0 200px;
+          height: 160px;
+        }
+        
+        .card-content i {
+          font-size: 24px;
+          margin-bottom: 10px;
+        }
+        
+        .card-content h3 {
+          font-size: 16px;
+          margin-bottom: 8px;
+        }
+        
+        .card-content p {
+          font-size: 12px;
+        }
+        
+        @keyframes scroll-cards {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(calc(-200px * 3 - 60px));
+          }
+        }
+      }
 
     /* HERO */
     .hero {
@@ -187,131 +187,151 @@ nav a:hover::after {
       pointer-events: none;
     }
 
-    /* Icons */
-.infinite-scroll-container {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  overflow: hidden;   
-  position: relative;
-  background: transparent; /* wala nang bg block */
-  padding: 10px 0;
-}
+          /* Icons */
+      .infinite-scroll-container {
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto;
+        overflow: hidden;   
+        position: relative;
+        background: transparent; /* wala nang bg block */
+        padding: 10px 0;
+      }
 
-.infinite-scroll-track {
-  display: flex;
-  gap: 12px;
-  animation: scroll-cards 18s linear infinite;
-  padding: 0 12px;
-}
+      .infinite-scroll-track {
+        display: flex;
+        gap: 12px;
+        animation: scroll-cards 18s linear infinite;
+        padding: 0 12px;
+      }
 
-.infinite-scroll-card {
-  flex: 0 0 100px;
-  height: 100px;
-  background: #fff;
-  border: 2px solid #000; /* black lines */
-  border-radius: 10px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+      .infinite-scroll-card {
+        flex: 0 0 100px;
+        height: 100px;
+        background: #fff;
+        border: 2px solid #000; /* black lines */
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
-.infinite-scroll-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
-}
+      .infinite-scroll-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+      }
 
-.card-content {
-  height: 100%;
-  padding: 10px;
-  color: #000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
+      .card-content {
+        height: 100%;
+        padding: 10px;
+        color: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
 
-.card-content img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  margin-bottom: 8px;
-}
+      .card-content img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        margin-bottom: 8px;
+      }
 
-.card-content h3 {
-  font-size: 12px;
-  margin: 0;
-}
+      .card-content h3 {
+        font-size: 12px;
+        margin: 0;
+      }
 
-@keyframes scroll-cards {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-100px * 4 - 48px)); }
-}
+      @keyframes scroll-cards {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-100px * 4 - 48px)); }
+      }
 
-/* Dark mode (optional) */
-@media (prefers-color-scheme: dark) {
-  .infinite-scroll-card {
-    background: #fff;
-    border: 2px solid #000;
-  }
-}
+      /* Dark mode (optional) */
+      @media (prefers-color-scheme: dark) {
+        .infinite-scroll-card {
+          background: #fff;
+          border: 2px solid #000;
+        }
+      }
 
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .infinite-scroll-card {
-    flex: 0 0 80px;
-    height: 80px;
-  }
+      .link-icon {
+        text-decoration: none;
+        color: #111;          /* kulay ng text */
+        font-weight: bold;
+        position: relative;
+        display: inline-block;
+        padding-right: 20px;  /* space para sa icon */
+      }
 
-  .card-content img {
-    width: 30px;
-    height: 30px;
-  }
+      .link-icon::after {
+        content: "↗";         /* yung icon mismo */
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #000;          /* solid black */
+        font-size: 0.9em;
+      }
+      
 
-  .card-content h3 {
-    font-size: 10px;
-  }
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .infinite-scroll-card {
+          flex: 0 0 80px;
+          height: 80px;
+        }
 
-  @keyframes scroll-cards {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-80px * 4 - 48px)); }
-  }
-}
+        .card-content img {
+          width: 30px;
+          height: 30px;
+        }
+
+        .card-content h3 {
+          font-size: 10px;
+        }
+
+        @keyframes scroll-cards {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(calc(-80px * 4 - 48px)); }
+        }
+      }
 
 
-/* Dark mode styles */
-@media (prefers-color-scheme: dark) {
-  .infinite-scroll-card {
-    background: linear-gradient(135deg, #090909ffrgba(0, 0, 0, 1)d5);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  }
-}
+      /* Dark mode styles */
+      @media (prefers-color-scheme: dark) {
+        .infinite-scroll-card {
+          background: linear-gradient(135deg, #090909ffrgba(0, 0, 0, 1)d5);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+      }
 
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .infinite-scroll-card {
-    flex: 0 0 120px;
-    height: 120px;
-  }
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+          .infinite-scroll-card {
+            flex: 0 0 120px;
+            height: 120px;
+          }
 
-  .card-content img {
-    width: 40px;
-    height: 40px;
-  }
+          .card-content img {
+            width: 40px;
+            height: 40px;
+          }
 
-  .card-content h3 {
-    font-size: 12px;
-  }
+          .card-content h3 {
+            font-size: 12px;
+          }
 
-  @keyframes scroll-cards {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(calc(-120px * 4 - 60px));
-    }
-  }
-}
+          @keyframes scroll-cards {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(calc(-120px * 4 - 60px));
+            }
+          }
+        }
 
     /* CONTENT SECTIONS */
     .section {
@@ -325,23 +345,23 @@ nav a:hover::after {
       font-size: 2em;
       margin-bottom: 1em;
     }
-       /* LEARN MORE */
-    .learn-more {
-  display: inline-block;
-  margin-top: 15px;
-  font-weight: bold;
-  font-size: 1rem;
-  color: #111;
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: all 0.3s ease;
-}
+          /* LEARN MORE */
+        .learn-more {
+      display: inline-block;
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #111;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
 
-.learn-more:hover {
-  color: #555;
-  border-bottom: 2px solid #111;
-  letter-spacing: 1px;
-}
+    .learn-more:hover {
+      color: #555;
+      border-bottom: 2px solid #111;
+      letter-spacing: 1px;
+    }
 
 
     /* FOOTER */
@@ -489,19 +509,24 @@ nav a:hover::after {
     </p>
   </div>
 
-
-  <div class="section" id="projects">
+  <!-- Project -->
+    <div class="section" id="about">
     <h2>Projects</h2>
-    <p>
-      Currently designing at <strong>OFFT</strong>. Previously worked with
-      Apple, Instagram, Marqeta, PropertyGuru, and more.
+     <p>
+        I’ve built <strong>OFFT</strong> (streetwear clothing line), 
+        <strong>CommBridge</strong> (bridging communication barriers), 
+        and <strong>Assawayer Trading Inc.</strong> (international trading venture).
+    </p>
+     <a href="projects.php" class="learn-more">Projects →</a>
     </p>
   </div>
 
-  <div class="section" id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:your@email.com">mjamelkim@email.com</a></p>
-  </div>
+<!-- Contact -->
+<div class="section" id="contact">
+  <h2>Contact</h2>
+  <p>Personal Email: <a href="mailto:mjamelkim@gmail.com">mjamelkim@gmail.com</a></p>
+  <p>Work Email: <a href="mailto:jtmagatinfo@gmail.com">jtmagatinfo@gmail.com</a></p>
+</div>
 
   <!-- FOOTER -->
   <footer>
