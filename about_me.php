@@ -365,45 +365,73 @@ nav a:hover::after { transform: scaleX(1); transform-origin: left; }
   justify-content: center;
 }
 
-/* Hobby Card */
-.hobby-card {
-  flex: 1 1 260px;
-  background: #ffffffff;
-  border-radius: 16px;
-  padding: 30px 20px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+/* Hobbies Section */
+#hobbies {
+  padding: 60px 20px;
+  background: #f9fafc;
   text-align: center;
+}
+
+#hobbies h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.5px;
+}
+
+/* Grid container */
+.hobby-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Hobby card */
+.hobby-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .hobby-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.12);
 }
 
 .hobby-card .icon {
   margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.3s ease;
 }
 
-.hobby-card:hover .icon {
+.hobby-card .icon svg {
+  width: 50px;
+  height: 50px;
+  stroke: #4a4a4a;
+  transition: stroke 0.3s ease, transform 0.3s ease;
+}
+
+.hobby-card:hover .icon svg {
+  stroke: #2563eb; /* subtle blue accent */
   transform: scale(1.1);
 }
 
 .hobby-card h3 {
-  font-size: 1.4rem;
-  margin: 0 0 12px;
-  color: #000000ff;
+  font-size: 1.2rem;
   font-weight: 600;
+  color: #111;
+  margin-bottom: 12px;
 }
 
 .hobby-card p {
   font-size: 0.95rem;
-  color: #ffffffff;
+  color: #555;
   line-height: 1.5;
 }
 

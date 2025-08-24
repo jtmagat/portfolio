@@ -12,514 +12,430 @@
   <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <style>
-    body {
-      font-family: 'Russo One', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #000;
-      color: #f0f0f0;
-      overflow-x: hidden;
-    }
-    a { text-decoration: none; color: inherit; }
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-    .navbar {
-      width: 90%;
-      max-width: 1200px;
-      margin: 20px auto 0;
-      display: flex;
-      justify-content: center;
-      border: 1px solid #fff;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .navbar a {
-      flex: 1;
-      text-align: center;
-      padding: 12px 0;
-      font-weight: 600;
-      color: #fff;
-      border-right: 1px solid #fff;
-      transition: background 0.3s, color 0.3s;
-    }
-    .navbar a:last-child { border-right: none; }
-    .navbar a:hover { background: rgba(255, 255, 255, 1); color: #000; }
+<style>
+body {
+  font-family: 'Russo One', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #111;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
 
-    .hero {
-      width: 90%;
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 40px 30px;
-      text-align: center;
-      color: #fff;
-      border: 2px solid #fff;
-      border-radius: 12px;
-    }
-    .hero h1 { font-size: 3rem; margin: 0; letter-spacing: 2px; }
-    .hero p { font-size: 1.2rem; margin-top: 12px; color: #ccc; }
+/* ===== Navbar ===== */
+/* ===== Navbar ===== */
+.navbar {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto 0;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #000;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  position: relative; /* not fixed */
+  z-index: 1000;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
 
-    .marquee-container {
-      overflow: hidden;
-      margin: 50px auto;
-      width: 90%;
-      max-width: 1200px;
-      border-top: 1px solid #fff;
-      border-bottom: 1px solid #fff;
-      padding: 15px 0;
-    }
-    .marquee {
-      display: flex;
-      gap: 3rem;
-      animation: marquee 20s linear infinite;
-    }
-    .marquee:hover { animation-play-state: paused; }
-    .marquee i { color: #fff; font-size: 2rem; transition: transform 0.3s; }
-    .marquee i:hover { transform: scale(1.3); }
+.navbar.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
 
-    @keyframes marquee {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
+.navbar a {
+  flex: 1;
+  text-align: center;
+  padding: 12px 0;
+  font-weight: 600;
+  color: #000;
+  border-right: 1px solid #000;
+  transition: background 0.3s, color 0.3s;
+}
+.navbar a:last-child { border-right: none; }
+.navbar a:hover { background: #000; color: #fff; }
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700&display=swap');
 
-    /* ===== Featured Projects ===== */
-    .featured-project {
-      display: flex;
-      flex-wrap: wrap;
-      width: 90%;
-      max-width: 1200px;
-      margin: 50px auto;
-      gap: 30px;
-      align-items: center;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.6s ease;
-    }
-    .featured-project.visible { opacity: 1; transform: translateY(0); }
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Playfair+Display:wght@700&display=swap');
 
-    .featured-project.reverse { flex-direction: row-reverse; }
-
-    .featured-image {
-      position: relative;
-      flex: 1 1 400px;
-      height: 250px;
-      background-size: cover;
-      background-position: center;
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.4s ease;
-    }
-    .featured-image:hover { transform: scale(1.05); }
-
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(191, 195, 195, 0.53);
-      color: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.5rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-    .featured-image:hover .overlay { opacity: 1; transform: translateY(0); }
-
-    .project-info {
-      flex: 1 1 400px;
-      color: #ccc;
-    }
-    .project-info h3 { font-size: 1.8rem; margin-bottom: 15px; color: #fff; }
-    .project-info p { font-size: 1.1rem; line-height: 1.5; }
-
-    /* ===== Projects Grid ===== */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 50px auto 80px;
-      padding: 0 20px;
-    }
-    .project-card {
-      background: #111;
-      border-radius: 12px;
-      color: #fff;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(255,255,255,0.05);
-      text-align: center;
-      text-decoration: none;
-      transform: translateY(40px);
-      opacity: 0;
-      transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s ease;
-      position: relative;
-    }
-    .project-card h3 { margin: 12px 0; font-size: 1.2rem; font-weight: 600; }
-    .project-card .project-image {
-      width: 100%;
-      height: 180px;
-      background-size: cover;
-      background-position: center;
-      border-bottom: 2px solid #fff;
-    }
-    .project-card:hover { box-shadow: 0 0 25px rgba(0,255,255,0.15); }
-    .project-card.visible { transform: translateY(0); opacity: 1; }
-
-    /* Single divider for the Projects section */
-    .projects-divider {
-      width: 90%;
-      max-width: 1200px;
-      height: 2px;         
-      background-color: #fff; 
-      opacity: 0.3;        
-      margin: 50px auto;     
-      border-radius: 1px;   
-    }
-
-    .project-image {
+/* Hero Section */
+.hero-section {
   position: relative;
-  width: 100%;
-  height: 180px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  color: #000;
+  background: linear-gradient(270deg, #000, #fff, #000);
+  background-size: 600% 600%;
+  animation: gradientMove 12s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-section h1,
+.hero-section p {
+  position: relative;
+  z-index: 2; /* para nasa ibabaw ng animation */
+}
+
+.slideshow {
+  position: relative;
   background-size: cover;
   background-position: center;
-  border-bottom: 2px solid #fff;
-  border-radius: 12px 12px 0 0;
-  overflow: hidden;
-  cursor: pointer;
-  transition: 0.4s ease;
+  transition: background-image 1s ease-in-out;
+  animation: zoomPan 8s infinite alternate ease-in-out;
 }
 
-.project-image:hover {
-  transform: scale(1.05);
+@keyframes zoomPan {
+  0% {
+    background-size: 100%;
+    background-position: center;
+  }
+  50% {
+    background-size: 110%; /* zoom in */
+    background-position: center top; /* slight pan up */
+  }
+  100% {
+    background-size: 100%;
+    background-position: center;
+  }
 }
 
-.project-image .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(191,195,195,0.53);
-  color: #000;
+
+
+/* ===== Project Sections ===== */
+section.project {
+  height: 100vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  font-weight: 700;
-  font-size: 1.2rem;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: 0.3s;
+  align-items: center;
+  text-align: center;
+  color: #fff;  
+  position: relative;
+  margin: 50px auto;   /* space top/bottom */
+  max-width: 95%;      /* space left/right */
+  border-radius: 20px; /* optional, para mas clean */
+  overflow: hidden;    /* para hindi lumabas background */
+}
+section.project::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
 }
 
-.project-image:hover .overlay {
+section.project.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: scale(1) translateY(0);
 }
 
+section.project > * { position: relative; z-index: 1; }
+section.project h1 { font-size: 3.5rem; margin-bottom: 20px; }
 
+.project-link {
+  margin-top: 15px;
+  padding: 12px 24px;
+  border: 2px solid #ffffffff;
+  color: #ffffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+.project-link:hover {
+  background: #ffffffff;
+  color: #000;
+  box-shadow: 0 0 15px #000000ff;
+}
+@keyframes magnetEffect {
+  0% {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-15px); /* overshoot up */
+  }
+  80% {
+    transform: translateY(8px); /* bounce down */
+  }
+  100% {
+    transform: translateY(0); /* settle */
+  }
+}
 
+section.project {
+  opacity: 0;
+  transform: translateY(80px);
+  transition: none; /* alisin transition */
+}
 
-    /* ===== Back Button ===== */
-    .back-btn {
-      display: inline-block;
-      padding: 12px 25px;
-      border: 2px solid #fff;
-      border-radius: 12px;
-      color: #fff;
-      font-family: 'Russo One', sans-serif;
-      font-weight: 600;
-      text-align: center;
-      text-decoration: none;
-      transition: all 0.4s ease;
-      opacity: 0;
-      transform: translateY(20px);
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 999;
-      background: rgba(0,0,0,0.5);
-    }
-    .back-btn:hover {
-      color: #000;
-      background: rgba(255, 255, 255, 1);
-      border-color: rgba(255, 255, 255, 1);
-      box-shadow: 0 0 15px rgba(254, 255, 255, 0.5);
-    }
-    .back-btn.visible { opacity: 1; transform: translateY(0); }
+section.project.show {
+  animation: magnetEffect 0.9s ease-out forwards;
+}
 
-    /* Responsive */
-    @media (max-width: 900px) {
-      .featured-project, .featured-project.reverse { flex-direction: column; }
-    }
+.offt { background: url('assets/offtindex.png') no-repeat center/cover; }
+.commbridge { background: url('assets/commbridge.png') no-repeat center/cover; }
+.assawayer { background: url('assets/assawayer1.png') no-repeat center/cover; }
 
-    /* Contact / Client Section */
+/* ===== Contact Section ===== */
 .contact-section {
   width: 90%;
   max-width: 900px;
   margin: 100px auto 60px;
   padding: 40px 30px;
-  background: #111;
-  border: 2px solid #fff;
+  background: #fff;
+  border: 2px solid #000;
   border-radius: 12px;
   text-align: center;
-  color: #fff;
+  color: #000;
 }
-
-.contact-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
-}
-
-.contact-section p {
-  color: #ccc;
-  margin-bottom: 30px;
-}
-
+.contact-section h2 { font-size: 2.5rem; margin-bottom: 15px; }
+.contact-section p { color: #444; margin-bottom: 30px; }
 .contact-links {
   display: flex;
   justify-content: center;
   gap: 2rem;
   margin-bottom: 30px;
 }
-
 .contact-links a {
-  color: #fff;
+  color: #000;
   font-size: 1.2rem;
-  border: 1px solid #fff;
+  border: 1px solid #000;
   padding: 10px 20px;
   border-radius: 8px;
   transition: all 0.3s ease;
 }
-
-.contact-links a:hover {
-  background: rgba(253, 255, 255, 1);
-  color: #000;
-  border-color: rgba(255, 255, 255, 1);
-}
+.contact-links a:hover { background: #000; color: #fff; }
 
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-
 .contact-form input,
 .contact-form textarea {
   padding: 12px 15px;
   border-radius: 8px;
-  border: 1px solid #fff;
-  background: #000;
-  color: #fff;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
   font-family: 'Russo One', sans-serif;
   font-size: 1rem;
   resize: none;
 }
-
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-  color: #888;
-}
-
 .contact-form button {
   padding: 12px;
   font-size: 1rem;
   font-weight: 600;
-  color: #000;
-  background: rgba(255, 255, 255, 1);
+  color: #fff;
+  background: #000;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
-.contact-form button:hover {s
-  background: #fff;
-  color: rgba(157, 161, 161, 1);
-}
+.contact-form button:hover { background: #333; }
 
 .glowing-button {
   padding: 12px 24px;
   background: transparent;
-  color: #ffffffff;
-  border: 2px solid #fefefeff;
+  color: #000;
+  border: 2px solid #000;
   border-radius: 5px;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
-  box-shadow: 0 0 5px #00ffffff, 0 0 10prgba(255, 255, 255, 1)ff;
+  box-shadow: 0 0 5px #000, 0 0 10px #000;
   transition: all 0.3s ease;
 }
-
 .glowing-button:hover {
-  background: #ffffffff;
-  color: #090808ff;
-  box-shadow: 0 0 10px #000000ff, 0 0 20px #000000ff, 0 0 40px #000000ff;
+  background: #000;
+  color: #fff;
+  box-shadow: 0 0 10px #000, 0 0 20px #000, 0 0 40px #000;
 }
-  </style>
+
+/* ===== Back Button ===== */
+.back-btn {
+  display: inline-block;
+  padding: 12px 25px;
+  border: 2px solid #000;
+  border-radius: 12px;
+  color: #000;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+  background: rgba(255,255,255,0.8);
+}
+.back-btn:hover {
+  color: #fff;
+  background: #000;
+  border-color: #000;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+.back-btn.visible { opacity: 1; transform: translateY(0); }
+
+</style>
 </head>
 <body>
 
   <!-- Navbar -->
-  <div class="navbar">
-    <a href="#offt">OFFT</a>
+  <div class="navbar" id="navbar">
+     <a href="#assawayer">Assawayer</a>
     <a href="#commbridge">CommBridge</a>
-    <a href="#assawayer">Assawayer</a>
+      <a href="#offt">OFFT</a>
   </div>
 
-  <!-- Header -->
-  <div class="hero">
-    <h1>Projects</h1>
-    <p>Showcasing my featured works.</p>
-  </div>
-
-<!-- Marquee -->
-<div class="marquee-container">
-  <div class="marquee">
-    <i class="fab fa-figma"></i>
-    <i class="fas fa-code"></i>
-    <i class="fab fa-react"></i>
-    <i class="fab fa-php"></i>
-    <i class="fab fa-adobe"></i>
-    <i class="fab fa-node"></i>
-    <i class="fab fa-git-alt"></i>
-    <i class="fab fa-npm"></i>
-    <i class="fab fa-canva"></i>
-    <i class="fab fa-adobe"></i> <!-- Photoshop -->
-    <i class="fab fa-java"></i>
-    <i class="fab fa-css3-alt"></i>
-    <i class="fab fa-html5"></i>
+<!-- Hero -->
+<div class="hero-section">
+  <h1>PROJECTS</h1>
+  <p>
+    Hi, I’m JK — I create modern, functional, and stylish projects ranging from 
+    web applications to full-scale business solutions.  
+    This page showcases a few highlights of my work.  
+    While <strong>“About Me”</strong> tells you who I am,  
+    <strong>“Projects”</strong> shows what I can do.  
+  </p>
+  <div class="hero-lines">
+    <span></span>
+    <span class="circle"></span>
+    <span></span>
   </div>
 </div>
+<!-- Project Sections -->
+
+<section class="project assawayer slideshow" id="assawayer"
+  data-images="assets/assawayer1.png,assets/assawayer2.png,assets/assawayer3.png">
+  <h1>Assawayer Trading Inc.</h1>
+  <a href="http://localhost/inventory_finals/home.php" target="_blank" class="project-link">View Project</a>
+</section>
+
+<section class="project commbridge slideshow" id="commbridge"
+  data-images="assets/commbridge.png,assets/commbridge2.png">
+  <h1>CommBridge</h1>
+  <a href="http://localhost/commbridge/index.php" target="_blank" class="project-link">View Project</a>
+</section>
+
+<section class="project offt slideshow" id="offt" 
+  data-images="assets/offtindex.png,assets/offt2.png">
+  <h1>OFFT Clothing</h1>
+  <a href="http://localhost/offthreadz/products.php" target="_blank" class="project-link">View Project</a>
+</section>
 
 
-  <!-- Featured Projects -->
-<div class="featured-project" id="offt">
-  <div class="featured-image" style="background-image:url('assets/offtindex.png');"></div>
-  <div class="project-info">
-    <h3>OFFT Clothing</h3>
-    <p>Streetwear meets cinematic style. Designed with HTML, CSS, PHP & MySQL. Responsive and interactive layout with smooth animations.</p>
-  </div>
-</div>
 
-<div class="featured-project reverse" id="commbridge">
-  <div class="featured-image" style="background-image:url('assets/commbridge.png');"></div>
-  <div class="project-info">
-    <h3>CommBridge</h3>
-    <p>Connecting people with seamless tech. Built with React, Node.js, and PHP backend for real-time interactions.</p>
-  </div>
-</div>
-
-<div class="featured-project" id="assawayer">
-  <div class="featured-image" style="background-image:url('assets/assawayer1.png');"></div>
-  <div class="project-info">
-    <h3>Assawayer Trading Inc.</h3>
-    <p>Global logistics and trade platform. Developed using PHP, MySQL, and integrated inventory system.</p>
-  </div>
-</div>
-
- <!-- Projects Divider -->
-<div class="projects-divider"></div>
-
-<!-- Projects Grid -->
-<div class="projects-grid">
-  <a href="http://localhost/offthreadz/products.php" class="project-card" target="_blank">
-    <div class="project-image" style="background-image:url('assets/offtindex.png');">
-      <div class="overlay">View this project?</div>
-    </div>
-    <h3>OFFT Clothing</h3>
-  </a>
-
-  <a href="http://localhost/commbridge/index.php" class="project-card" target="_blank">
-    <div class="project-image" style="background-image:url('assets/commbridge.png');">
-      <div class="overlay">View this project?</div>
-    </div>
-    <h3>CommBridge</h3>
-  </a>
-
-  <a href="http://localhost/inventory_finals/home.php" class="project-card" target="_blank">
-    <div class="project-image" style="background-image:url('assets/assawayer1.png');">
-      <div class="overlay">View this project?</div>
-    </div>
-    <h3>Assawayer Trading Inc.</h3>
-  </a>
-</div>
-
-
-<!-- Contact / Client Section -->
-<div class="contact-section">
-  <h2>Work With Me</h2>
-  <p>If you want a project made, feel free to reach out via any of the links below or send a message directly.</p>
-
-  <!-- Button to reveal form -->
-  <button class="glowing-button" id="reveal-contact">Contact Me</button>
-
-  <!-- Hidden content -->
-  <div id="contact-content" style="display:none; margin-top:20px;">
+  <!-- Contact -->
+  <div class="contact-section">
+    <h2>Work With Me</h2>
+    <p>If you want a project made, feel free to reach out via any of the links below or send a message directly.</p>
     <div class="contact-links">
-      <a href="mailto:yourr.jtmagatinfo@gmail.com" target="_blank"><i class="fas fa-envelope"></i> Gmail</a>
+      <a href="mailto:jtmagatinfo@gmail.com" target="_blank"><i class="fas fa-envelope"></i> Work Email</a>
+      <a href="mailto:mjamelkim@gmail.com" target="_blank"><i class="fas fa-envelope"></i> Personal Email</a>
       <a href="https://www.facebook.com/shujinjk" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
       <a href="https://www.instagram.com/_hoyyjk/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
     </div>
-
-    <form action="https://formspree.io/f/xgvzgbeg" method="POST" class="contact-form">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
   </div>
-</div>
 
   <a href="portfolio.php" class="back-btn">Back to Home</a>
 
-  <script>
-    const featured = document.querySelectorAll('.featured-project');
-    const revealFeatured = () => {
-      const trigger = window.innerHeight * 0.85;
-      featured.forEach(f => {
-        const top = f.getBoundingClientRect().top;
-        if(top < trigger) f.classList.add('visible');
-      });
-    };
-    window.addEventListener('scroll', revealFeatured);
-    revealFeatured();
+<script>
+  gsap.registerPlugin(ScrollTrigger);
 
-    const cards = document.querySelectorAll('.project-card');
-    const revealCards = () => {
-      const trigger = window.innerHeight * 0.85;
-      cards.forEach(card => {
-        const top = card.getBoundingClientRect().top;
-        if(top < trigger) card.classList.add('visible');
-      });
-    };
-    window.addEventListener('scroll', revealCards);
-    revealCards();
-
-    let lastScroll = 0;
-    const backBtn = document.querySelector('.back-btn');
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.scrollY;
-           if(currentScroll < lastScroll && currentScroll > 100) {
-        backBtn.classList.add('visible');
-      } else {
-        backBtn.classList.remove('visible');
+  // Animate sections
+  gsap.utils.toArray("section.project, .hero-section").forEach((section) => {
+    gsap.from(section.children, {
+      opacity: 0,
+      y: 80,
+      scale: 0.95,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: section,
+        start: "top center",
+        end: "bottom center",
+        toggleActions: "play none none reverse"
       }
-      lastScroll = currentScroll;
     });
-
-      const btn = document.getElementById('reveal-contact');
-  const content = document.getElementById('contact-content');
-
-  btn.addEventListener('click', () => {
-    content.style.display = 'block';
-    btn.style.display = 'none'; // hide button after click
   });
-  </script>
+
+  // Navbar + Back Button Scroll Behavior
+  let lastScroll = 0;
+  const navbar = document.querySelector('.navbar');
+  const backBtn = document.querySelector('.back-btn');
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+
+    // Navbar: hide when scrolling down, show when scrolling up
+    if (currentScroll > lastScroll && currentScroll > 100) {
+      navbar.classList.add('hidden');
+    } else {
+      navbar.classList.remove('hidden');
+    }
+
+    // Back button: show after scrolling up a bit
+    if (currentScroll > 200) {
+      backBtn.classList.add('visible');
+    } else {
+      backBtn.classList.remove('visible');
+    }
+
+    lastScroll = currentScroll;
+  });
+
+  // Magnet effect trigger via Intersection Observer
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("section.project");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  });
+
+document.querySelectorAll(".slideshow").forEach(section => {
+  const images = section.dataset.images.split(",");
+  let index = 0;
+
+  section.style.backgroundImage = `url('${images[index]}')`;
+
+  setInterval(() => {
+    index = (index + 1) % images.length;
+    section.style.backgroundImage = `url('${images[index]}')`;
+  }, 3000); // palit every 5s
+});
+</script>
 
 </body>
 </html>
