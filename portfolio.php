@@ -271,11 +271,13 @@
     <!-- Project -->
     <div class="section" id="projects">
       <h2>Projects</h2>
-      <p>
-          I’ve built <strong>OFFT</strong> (streetwear clothing line), 
-          <strong>CommBridge</strong> (bridging communication barriers), 
-          and <strong>Assawayer Trading Inc.</strong> (international trading venture).
-      </p>
+  <p>
+  I’ve built <strong>OFFT</strong> (streetwear clothing line), 
+  <strong>CommBridge</strong> (bridging communication barriers), 
+  <strong>Assawayer Trading Inc.</strong> (international trading venture), and 
+  <strong>Bingo Schedule</strong> (a mobile app built with Expo Go for interactive task management).
+</p>
+
       <a href="projects.php" class="learn-more">Projects →</a>
     </div>
 

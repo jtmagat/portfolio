@@ -28,18 +28,15 @@ body {
 a { text-decoration: none; color: inherit; }
 
 /* ===== Navbar ===== */
-/* ===== Navbar ===== */
 .navbar {
-  width: 90%;
-  max-width: 1200px;
-  margin: 20px auto 0;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
   display: flex;
   justify-content: center;
-  border: 1px solid #000;
-  border-radius: 12px;
-  overflow: hidden;
+  border-bottom: 1px solid #000;
   background: #fff;
-  position: relative; /* not fixed */
   z-index: 1000;
   transition: transform 0.4s ease, opacity 0.4s ease;
 }
@@ -52,72 +49,63 @@ a { text-decoration: none; color: inherit; }
 .navbar a {
   flex: 1;
   text-align: center;
-  padding: 12px 0;
+  padding: 14px 0;
   font-weight: 600;
   color: #000;
   border-right: 1px solid #000;
   transition: background 0.3s, color 0.3s;
 }
-.navbar a:last-child { border-right: none; }
-.navbar a:hover { background: #000; color: #fff; }
+.navbar a:last-child {
+  border-right: none;
+}
+.navbar a:hover {
+  background: #000;
+  color: #fff;
+}
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700&display=swap');
 
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Playfair+Display:wght@700&display=swap');
 
-/* Hero Section */
+/* ===== Hero ===== */
 .hero-section {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background: #fff;
   text-align: center;
-  overflow: hidden;
+  padding: 160px 20px 100px;
+}
+
+.hero-title {
+  font-size: 8rem;
+  font-weight: 900;
+  margin: 0;
   color: #000;
-  background: linear-gradient(270deg, #000, #fff, #000);
-  background-size: 600% 600%;
-  animation: gradientMove 12s ease infinite;
+  animation: scaleIn 0.8s ease-out forwards;
+  z-index: 1;
+  position: relative;
 }
 
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.hero-section h1,
 .hero-section p {
+  font-size: 1.2rem;
+  color: #444;
+  max-width: 800px;
+  margin: 20px auto 0;
+  line-height: 1.6;
+  animation: slideUp 1s ease-out forwards;
+  z-index: 1;
   position: relative;
-  z-index: 2; /* para nasa ibabaw ng animation */
 }
 
-.slideshow {
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  transition: background-image 1s ease-in-out;
-  animation: zoomPan 8s infinite alternate ease-in-out;
+/* Animations */
+@keyframes scaleIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
-@keyframes zoomPan {
-  0% {
-    background-size: 100%;
-    background-position: center;
-  }
-  50% {
-    background-size: 110%; /* zoom in */
-    background-position: center top; /* slight pan up */
-  }
-  100% {
-    background-size: 100%;
-    background-position: center;
-  }
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
-
-
 
 /* ===== Project Sections ===== */
 section.project {
@@ -164,6 +152,14 @@ section.project h1 { font-size: 3.5rem; margin-bottom: 20px; }
   color: #000;
   box-shadow: 0 0 15px #000000ff;
 }
+
+.project.show {
+  transition: transform 0.3s ease;
+}
+.project.show:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
 @keyframes magnetEffect {
   0% {
     opacity: 0;
@@ -194,6 +190,22 @@ section.project.show {
 .offt { background: url('assets/offtindex.png') no-repeat center/cover; }
 .commbridge { background: url('assets/commbridge.png') no-repeat center/cover; }
 .assawayer { background: url('assets/assawayer1.png') no-repeat center/cover; }
+
+/* Bingo section default bg (fallback kapag di pa naglo-load ang slideshow) */
+.bingo { 
+  background: url('assets/bingo1.jpg') no-repeat center/cover; 
+}
+
+/* Subtle pulse tuwing magpapalit ang image */
+.project.bg-anim {
+  animation: pulseZoom 0.9s ease;
+}
+@keyframes pulseZoom {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
 
 /* ===== Contact Section ===== */
 .contact-section {
@@ -299,20 +311,82 @@ section.project.show {
 }
 .back-btn.visible { opacity: 1; transform: translateY(0); }
 
+/* Cursor base */
+.cursor {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: rgba(0, 255, 200, 0.5);
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.8), 0 0 40px rgba(0, 255, 200, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Cursor hover enlarge */
+a:hover ~ .cursor,
+button:hover ~ .cursor,
+.project:hover ~ .cursor {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 150, 255, 0.5);
+  box-shadow: 0 0 30px rgba(0, 150, 255, 0.9), 0 0 60px rgba(0, 150, 255, 0.6);
+}
+
+/* Crosser effect for hero/project titles */
+.crosser {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.crosser::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -120%;
+  width: 100%;
+  height: 2px;
+  background: #00ffc8;
+  transform: rotate(-20deg);
+  animation: crosserAnim 2s linear infinite;
+}
+
+@keyframes crosserAnim {
+  0% { left: -120%; }
+  100% { left: 120%; }
+}
+
+/* Project pulse animation on bg change */
+.project.bg-anim {
+  animation: pulseZoom 0.9s ease;
+}
+@keyframes pulseZoom {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+
 </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <div class="navbar" id="navbar">
-     <a href="#assawayer">Assawayer</a>
-    <a href="#commbridge">CommBridge</a>
-      <a href="#offt">OFFT</a>
-  </div>
+<!-- Navbar -->
+<div class="navbar" id="navbar">
+<a href="#assawayer">Assawayer</a>
+  <a href="#commbridge">CommBridge</a>
+   <a href="#offt">OFFT</a>
+  <a href="#bingo">Bingo Schedule</a>
+</div>
 
 <!-- Hero -->
 <div class="hero-section">
-  <h1>PROJECTS</h1>
+  <h1 class="hero-title">PROJECTS</h1>
   <p>
     Hi, I’m JK — I create modern, functional, and stylish projects ranging from 
     web applications to full-scale business solutions.  
@@ -320,12 +394,8 @@ section.project.show {
     While <strong>“About Me”</strong> tells you who I am,  
     <strong>“Projects”</strong> shows what I can do.  
   </p>
-  <div class="hero-lines">
-    <span></span>
-    <span class="circle"></span>
-    <span></span>
-  </div>
 </div>
+
 <!-- Project Sections -->
 
 <section class="project assawayer slideshow" id="assawayer"
@@ -346,19 +416,40 @@ section.project.show {
   <a href="http://localhost/offthreadz/products.php" target="_blank" class="project-link">View Project</a>
 </section>
 
-
-
-  <!-- Contact -->
-  <div class="contact-section">
-    <h2>Work With Me</h2>
-    <p>If you want a project made, feel free to reach out via any of the links below or send a message directly.</p>
-    <div class="contact-links">
-      <a href="mailto:jtmagatinfo@gmail.com" target="_blank"><i class="fas fa-envelope"></i> Work Email</a>
-      <a href="mailto:mjamelkim@gmail.com" target="_blank"><i class="fas fa-envelope"></i> Personal Email</a>
-      <a href="https://www.facebook.com/shujinjk" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-      <a href="https://www.instagram.com/_hoyyjk/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-    </div>
+<section class="project bingo" id="bingo" 
+  data-images="assets/bingoschedule.png,assets/bingo2.png">
+  <h1>Bingo Schedule</h1>
+  <div class="project-buttons">
+    <a href="https://github.com/jtmagat/bingo_schedule.git" target="_blank" class="project-link">
+      View on GitHub
+    </a>
+    <a href="bingo_demo.php" class="project-link">
+      View Demo
+    </a>
   </div>
+</section>
+
+<!-- Contact -->
+<div class="contact-section" id="contact">
+  <h2>Work With Me</h2>
+  <p>If you want a project made, feel free to reach out via any of the links below or send me a message directly.</p>
+  
+  <!-- Contact Links -->
+  <div class="contact-links">
+    <a href="mailto:jtmagatinfo@gmail.com" target="_blank"><i class="fas fa-envelope"></i> Work Email</a>
+    <a href="mailto:mjamelkim@gmail.com" target="_blank"><i class="fas fa-envelope"></i> Personal Email</a>
+    <a href="https://www.facebook.com/shujinjk" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+    <a href="https://www.instagram.com/_hoyyjk/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+  </div>
+
+  <!-- Contact Form -->
+  <form action="https://formspree.io/f/xldjyang" method="POST" class="contact-form">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="_replyto" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</div>
 
   <a href="portfolio.php" class="back-btn">Back to Home</a>
 
@@ -383,29 +474,30 @@ section.project.show {
   });
 
   // Navbar + Back Button Scroll Behavior
-  let lastScroll = 0;
-  const navbar = document.querySelector('.navbar');
-  const backBtn = document.querySelector('.back-btn');
+let lastScroll = 0;
+const navbar = document.querySelector('.navbar');
+const backBtn = document.querySelector('.back-btn');
 
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
+window.addEventListener('scroll', () => {
+  const currentScroll = window.scrollY;
 
-    // Navbar: hide when scrolling down, show when scrolling up
-    if (currentScroll > lastScroll && currentScroll > 100) {
-      navbar.classList.add('hidden');
-    } else {
-      navbar.classList.remove('hidden');
-    }
+  // Navbar: hide when scrolling down, show when scrolling up
+  if (currentScroll > lastScroll && currentScroll > 100) {
+    navbar.classList.add('hidden');
+  } else {
+    navbar.classList.remove('hidden');
+  }
 
-    // Back button: show after scrolling up a bit
-    if (currentScroll > 200) {
-      backBtn.classList.add('visible');
-    } else {
-      backBtn.classList.remove('visible');
-    }
+  // Back button: show after scrolling down
+  if (currentScroll > 200) {
+    backBtn.classList.add('visible');
+  } else {
+    backBtn.classList.remove('visible');
+  }
 
-    lastScroll = currentScroll;
-  });
+  lastScroll = currentScroll;
+});
+
 
   // Magnet effect trigger via Intersection Observer
   document.addEventListener("DOMContentLoaded", () => {
@@ -435,6 +527,133 @@ document.querySelectorAll(".slideshow").forEach(section => {
     section.style.backgroundImage = `url('${images[index]}')`;
   }, 3000); // palit every 5s
 });
+
+  // === Simple background slideshow for any .project that has data-images ===
+  document.addEventListener('DOMContentLoaded', () => {
+    const slideshows = document.querySelectorAll('section.project[data-images]');
+    slideshows.forEach(section => {
+      const list = section.dataset.images
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      if (list.length < 2) return; // need at least 2 to rotate
+
+      let idx = 0;
+      // set initial bg
+      section.style.backgroundImage = `url('${list[idx]}')`;
+
+      setInterval(() => {
+        idx = (idx + 1) % list.length;
+        // swap bg
+        section.style.backgroundImage = `url('${list[idx]}')`;
+        // subtle pulse cue
+        section.classList.add('bg-anim');
+        setTimeout(() => section.classList.remove('bg-anim'), 900);
+      }, 4000); // every 4s; adjust as you like
+    });
+  });
+
+  gsap.registerPlugin(ScrollTrigger);
+
+// GSAP scroll reveal (opacity + slide/scale)
+gsap.utils.toArray("section.project, .hero-section").forEach((section) => {
+  gsap.from(section.children, {
+    opacity: 0,
+    y: 80,
+    duration: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: section,
+      start: "top 80%",
+      toggleActions: "play none none reverse"
+    }
+  });
+});
+
+// Magnet effect via IntersectionObserver
+document.addEventListener("DOMContentLoaded", () => {
+  const sections = document.querySelectorAll("section.project");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show"); // enable hover magnet
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(section => observer.observe(section));
+});
+gsap.registerPlugin(ScrollTrigger);
+
+// Scroll reveal / magnet effect for projects
+document.querySelectorAll("section.project, .hero-section").forEach((section) => {
+  gsap.from(section.children, {
+    opacity: 0,
+    y: 80,
+    scale: 0.95,
+    duration: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: section,
+      start: "top 80%",
+      toggleActions: "play none none reverse"
+    }
+  });
+});
+
+// Magnet effect trigger via IntersectionObserver
+document.addEventListener("DOMContentLoaded", () => {
+  const sections = document.querySelectorAll("section.project");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(section => observer.observe(section));
+});
+
+// Background slideshow for sections with multiple images
+document.querySelectorAll(".slideshow").forEach(section => {
+  const images = section.dataset.images.split(",").map(s => s.trim()).filter(Boolean);
+  if(images.length < 2) return;
+
+  let index = 0;
+  section.style.backgroundImage = `url('${images[index]}')`;
+
+  setInterval(() => {
+    index = (index + 1) % images.length;
+    section.style.backgroundImage = `url('${images[index]}')`;
+    section.classList.add('bg-anim');
+    setTimeout(() => section.classList.remove('bg-anim'), 900);
+  }, 4000); // change every 4s
+});
+
+// Cursor movement
+const cursor = document.createElement("div");
+cursor.classList.add("cursor");
+document.body.appendChild(cursor);
+
+document.addEventListener("mousemove", e => {
+  gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: "power2.out" });
+});
+
+// Cursor hover scale for interactive elements
+document.querySelectorAll("a, button, .project").forEach(el => {
+  el.addEventListener("mouseenter", () => {
+    gsap.to(cursor, { scale: 2, duration: 0.3, ease: "power2.out" });
+  });
+  el.addEventListener("mouseleave", () => {
+    gsap.to(cursor, { scale: 1, duration: 0.3, ease: "power2.out" });
+  });
+});
+
+
 </script>
 
 </body>
