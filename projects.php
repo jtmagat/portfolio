@@ -190,11 +190,9 @@ section.project.show {
 .offt { background: url('assets/offtindex.png') no-repeat center/cover; }
 .commbridge { background: url('assets/commbridge.png') no-repeat center/cover; }
 .assawayer { background: url('assets/assawayer1.png') no-repeat center/cover; }
+.bingo { background: url('assets/bingo1.jpg') no-repeat center/cover; }
+.wittyweather { background: url('assets/wittyweather1.png') no-repeat center/cover;c}
 
-/* Bingo section default bg (fallback kapag di pa naglo-load ang slideshow) */
-.bingo { 
-  background: url('assets/bingo1.jpg') no-repeat center/cover; 
-}
 
 /* Subtle pulse tuwing magpapalit ang image */
 .project.bg-anim {
@@ -380,8 +378,10 @@ button:hover ~ .cursor,
 <div class="navbar" id="navbar">
 <a href="#assawayer">Assawayer</a>
   <a href="#commbridge">CommBridge</a>
+   <a href="#happy">Happy Sprays</a>
    <a href="#offt">OFFT</a>
   <a href="#bingo">Bingo Schedule</a>
+   <a href="#witty">Witty Weather</a>
 </div>
 
 <!-- Hero -->
@@ -410,12 +410,20 @@ button:hover ~ .cursor,
   <a href="http://localhost/commbridge/index.php" target="_blank" class="project-link">View Project</a>
 </section>
 
+<section class="project happy slideshow" id="happy" 
+  data-images="assets/hp1.png,assets/hp2.png">
+  <h1>Happy Sprays</h1>
+  <a href="http://localhost/happy-sprays/index.php" target="_blank" class="project-link">View Project</a>
+</section>
+
+
 <section class="project offt slideshow" id="offt" 
   data-images="assets/offtindex.png,assets/offt2.png">
   <h1>OFFT Clothing</h1>
   <a href="http://localhost/offthreadz/products.php" target="_blank" class="project-link">View Project</a>
 </section>
 
+<!-- Bingo Project -->
 <section class="project bingo" id="bingo" 
   data-images="assets/bingoschedule.png,assets/bingo2.png">
   <h1>Bingo Schedule</h1>
@@ -428,6 +436,21 @@ button:hover ~ .cursor,
     </a>
   </div>
 </section>
+
+<!-- Witty Weather Project -->
+<section class="project witty" id="witty" 
+  data-images="assets/wittyweather.png,assets/wittyweather.png">
+  <h1>Witty Weather</h1>
+  <div class="project-buttons">
+    <a href="https://github.com/jtmagat/witty_weather.git" target="_blank" class="project-link">
+      View on GitHub
+    </a>
+    <a href="witty_demo.php" class="project-link">
+      View Demo
+    </a>
+  </div>
+</section>
+
 
 <!-- Contact -->
 <div class="contact-section" id="contact">

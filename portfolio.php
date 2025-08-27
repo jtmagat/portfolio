@@ -271,12 +271,15 @@
     <!-- Project -->
     <div class="section" id="projects">
       <h2>Projects</h2>
-  <p>
+<p>
   I’ve built <strong>OFFT</strong> (streetwear clothing line), 
   <strong>CommBridge</strong> (bridging communication barriers), 
-  <strong>Assawayer Trading Inc.</strong> (international trading venture), and 
-  <strong>Bingo Schedule</strong> (a mobile app built with Expo Go for interactive task management).
+  <strong>Assawayer Trading Inc.</strong> (international trading venture), 
+  <strong>Bingo Schedule</strong> (a mobile app for interactive task management), 
+  <strong>Witty Weather</strong> (a minimalist weather app with playful effects), and 
+  <strong>Happy Sprays</strong> (an e-commerce site for perfumes).
 </p>
+
 
       <a href="projects.php" class="learn-more">Projects →</a>
     </div>
